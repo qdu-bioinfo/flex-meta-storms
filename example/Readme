@@ -1,0 +1,22 @@
+#Here we provide a demo dataset with 88 human microbiome samples
+#
+#File description
+#dataset.abd: Samples OTU abundance as input.
+#dataset.meta: Meta-data. 
+#
+#To run the demo, you can either 
+#
+#sh Readme
+#
+#or
+#type the following commands. 
+#
+#Commands:
+PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
+
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Host_disease.sig.meanTests.xls -K -o exact_marker.dist
+
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Host_disease.sig.meanTests.xls -L -o target_marker.dist
+#
+#
+#This demo run should take about 1 minute on a recommended computer.
