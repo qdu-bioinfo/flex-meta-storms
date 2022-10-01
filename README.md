@@ -82,54 +82,71 @@ make
 ```
 # Usage
 **a.  Calculate exact markers distance**
-- User installed as a package
+- User installed as a software
 ```
-FMS-comp-taxa -T samples.Abd -M samples.xls -K -o samples.dist
+FMS-comp-taxa -T dataset.abd -M bio_marker.tab -K -o exact_marker.dist
 ```
-The output file “samples.dist” is the pairwise distance matrix. 
+The output file “exact_marker.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T samples.Abd -M samples.xls -K -o samples.dist
+PM-comp-taxa-local -T dataset.abd -M bio_marker.tab -K -o exact_marker.dist
 ```
-The output file “samples.dist” is the pairwise distance matrix. 
+The output file “exact_marker.dist” is the pairwise distance matrix. 
 
 **b. Calculate Flex Meta-Storms distance**
-- User installed as a package
+- User installed as a software
 ```
-FMS-comp-taxa -T samples.Abd -M samples.xls -L -o samples.dist
+FMS-comp-taxa -T dataset.abd -M bio_marker.tab -L -o target_marker.dist
 ```
-The output file “samples.dist” is the pairwise distance matrix. 
+The output file “target_marker.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T samples.Abd -M samples.xls -L -o samples.dist
+PM-comp-taxa-local -T dataset.abd -M bio_marker.tab -L -o target_marker.dist
 ```
-The output file “samples.dist” is the pairwise distance matrix. 
+The output file “target_marker.dist” is the pairwise distance matrix. 
 
 # Example dataset
-Here, we provide a demo dataset (Real dataset I) in the "examples" folder with real species information for 88 individuals. In this package, "sample.abd" is the relative abundance at the OTU level, and "samples.xls" are the exact markers of the samples generated using the built-in script PM_Marker_test.R.
+Here, we provide a demo dataset (Real dataset I) in the "examples" folder with real species information for 136 individuals. In this package, "dataset.meta" is the meta information of the samples, and "dataset.abd" is the relative abundance at the OTU level.
 To run the demo, you can either:
 ```
 cd example
 sh Readme
 ```
-or type the following command to calculate the FMS distance:
-- User installed as a package
+or type the following command to calculate the exact marker distance and the Flex Meta-Storms distance:
+- User installed as a software
 ```
-FMS-comp-taxa -T samples.Abd -M samples.xls -L -o samples.dist
+PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
+
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -K -o exact.dist
+
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -L -o target.dist
 ```
-The output file “samples.dist” is the pairwise distance matrix. 
+The output file “*.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T samples.Abd -M samples.xls -L -o samples.dist
+PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
+
+PM-comp-taxa-local -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -K -o exact.dist
+
+PM-comp-taxa-local -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -L -o target.dist
 ```
 
-This demo run should take less than 1 minute on a recommended computer.
+This demo run should take less than 5 minutes on a recommended computer.
 
 # Tools in this package
-**a. FMS-comp-taxa or PM-comp-taxa-local**
+**a. PM_Marker_Test.R**
+
+Screening biomarkers for community samples. Run:
+```
+PM_Marker_Test.R -h
+```
+for detailed parameters.
+
+
+**b. FMS-comp-taxa or PM-comp-taxa-local**
 
 Calculate Exact markers distance or Flex Meta-Storms distance between samples. Run:
 ```
@@ -139,15 +156,6 @@ PM-comp-taxa-local -h
 ```
 for detailed parameters.
 
-**b. Global-comp-taxa or PM-comp-taxa**
-
-It Calculate the global distance between samples. Run:
-```
-Global-comp-taxa -h
-or
-PM-comp-taxa -h
-```
-for detailed parameters.
 
 
 # Supplementary
