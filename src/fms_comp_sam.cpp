@@ -279,7 +279,7 @@ void target_marker(string Tablefilename)
 		{
 			for (int j = 1; j < sample_otu_sum.size(); j++)
 			{
-				for (int m = 0; m < similarity_table[bio_marker[i]].size(); m += 2)
+				for (int m = 0; similarity_table[bio_marker[i]][0] != "00" && m < similarity_table[bio_marker[i]].size()-1; m += 2)
 				{
 					if (sample_otu_sum[j] == similarity_table[bio_marker[i]][m])
 					{

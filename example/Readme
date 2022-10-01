@@ -14,9 +14,9 @@
 #Commands:
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
-FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Host_disease.sig.meanTests.xls -K -o exact_marker.dist
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -K -o exact.dist
 
-FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Host_disease.sig.meanTests.xls -L -o target_marker.dist
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -L -o target.dist
 #
 #
 #This demo run should take about 1 minute on a recommended computer.
