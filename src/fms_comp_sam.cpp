@@ -62,7 +62,7 @@ int printhelp(){
     cout << "\t  -L Calculate Flex Meta-Storms distance" << endl;
     
     cout << "\t[Output options]" << endl;
-    cout << "\t  -o Output file, default is to output on screen" << endl;
+    cout << "\t  -o Output file, Output distance matrix or similarity matrix file" << endl;
     cout << "\t  -d Output format, distance (T) or similarity (F), default is T" << endl;
     cout << "\t[Other options]" << endl;
     cout << "\t  -h Help" << endl;
