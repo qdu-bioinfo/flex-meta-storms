@@ -54,7 +54,7 @@ int printhelp(){
     cout << "Options: " << endl;
     
     cout << "\t[Input options, required]" << endl;
-    cout << "\t  -T (upper) Input OTU count table (*.OTU.Abd) for multi-sample comparison" << endl;
+    cout << "\t  -T (upper) Input OTU abundance table (*.OTU.Abd) for multi-sample comparison" << endl;
 	cout << "\t  -M Input biomarker path" << endl;
 
     cout << "\t  -K Calculate Exact marker distance" << endl;
