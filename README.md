@@ -87,6 +87,14 @@ make
 FMS-comp-taxa -T dataset.abd -M bio_marker.tab -K -o exact_marker.dist
 ```
 The output file “exact_marker.dist” is the pairwise distance matrix. 
+The format of "bio_marker. tab" is as follows:
+|  | A.test | B.test | ... |
+| :----:| :----: | :----: | :----: |
+| OTU_1| ... | ... | ... |
+| OTU_2 | ... | ... | ... |
+| OTU_3 | ... | ... | ... |
+| OTU_4 | ... | ... | ... |
+| ... | ... | ... | ... | ... |
 
 - User installed as a PMS plugin
 ```
