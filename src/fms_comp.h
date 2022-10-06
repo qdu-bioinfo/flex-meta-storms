@@ -251,6 +251,9 @@ float _FMS_Comp_Tree::Calc_FMS_sim(float * Abd_1, float * Abd_2){
 		    abd_m+=Abd_1[i];
 	    for(int j=0;j<len_n;j++)
 		    abd_n+=Abd_2[j];
+		if (abd_m + abd_n == 0)
+			total = 0;
+		else
             total=2*total/(abd_m+abd_n);
         return total;
       }
