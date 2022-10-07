@@ -81,12 +81,12 @@ cd flex-meta-storms
 make
 ```
 # Usage
-**a.  Calculate exact markers distance**
+**a.  Calculate Flex Meta-Storms distance**
 - User installed as a software
 ```
-FMS-comp-taxa -T dataset.abd -M 1 -m bio_marker.tab -o exact_marker.dist
+FMS-comp-taxa -T dataset.abd -M 0 -m bio_marker.tab -o target.dist
 ```
-The output file “exact_marker.dist” is the pairwise distance matrix. 
+The output file “target.dist” is the pairwise distance matrix. 
 The format of "bio_marker. tab" is as follows:
 |  | A.test | B.test | ... |
 | :----:| :----: | :----: | :----: |
@@ -98,22 +98,22 @@ The format of "bio_marker. tab" is as follows:
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T dataset.abd -M 1 -m bio_marker.tab -o exact_marker.dist
+PM-comp-taxa-local -T dataset.abd -M 0 -m bio_marker.tab -o target.dist
 ```
-The output file “exact_marker.dist” is the pairwise distance matrix. 
+The output file “target.dist” is the pairwise distance matrix. 
 
-**b. Calculate Flex Meta-Storms distance**
+**b. Calculate exact markers distance**
 - User installed as a software
 ```
-FMS-comp-taxa -T dataset.abd -M 0 -m bio_marker.tab -o target_marker.dist
+FMS-comp-taxa -T dataset.abd -M 1 -m bio_marker.tab -o exact.dist
 ```
-The output file “target_marker.dist” is the pairwise distance matrix. 
+The output file “exact.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T dataset.abd -M 0 -m bio_marker.tab -o target_marker.dist
+PM-comp-taxa-local -T dataset.abd -M 1 -m bio_marker.tab -o exact.dist
 ```
-The output file “target_marker.dist” is the pairwise distance matrix. 
+The output file “exact.dist” is the pairwise distance matrix. 
 
 # Example dataset
 Here, we provide a demo dataset (Real dataset I) in the "examples" folder with real species information for 136 individuals. In this package, "dataset.meta" is the meta information of the samples, and "dataset.abd" is the relative abundance at the OTU level.
