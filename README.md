@@ -84,7 +84,7 @@ make
 **a.  Calculate exact markers distance**
 - User installed as a software
 ```
-FMS-comp-taxa -T dataset.abd -M bio_marker.tab -K -o exact_marker.dist
+FMS-comp-taxa -T dataset.abd -M 1 -m bio_marker.tab -o exact_marker.dist
 ```
 The output file “exact_marker.dist” is the pairwise distance matrix. 
 The format of "bio_marker. tab" is as follows:
@@ -98,20 +98,20 @@ The format of "bio_marker. tab" is as follows:
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T dataset.abd -M bio_marker.tab -K -o exact_marker.dist
+PM-comp-taxa-local -T dataset.abd -M 1 -m bio_marker.tab -o exact_marker.dist
 ```
 The output file “exact_marker.dist” is the pairwise distance matrix. 
 
 **b. Calculate Flex Meta-Storms distance**
 - User installed as a software
 ```
-FMS-comp-taxa -T dataset.abd -M bio_marker.tab -L -o target_marker.dist
+FMS-comp-taxa -T dataset.abd -M 0 -m bio_marker.tab -o target_marker.dist
 ```
 The output file “target_marker.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T dataset.abd -M bio_marker.tab -L -o target_marker.dist
+PM-comp-taxa-local -T dataset.abd -M 0 -m bio_marker.tab -o target_marker.dist
 ```
 The output file “target_marker.dist” is the pairwise distance matrix. 
 
@@ -122,24 +122,20 @@ To run the demo, you can either:
 cd example
 sh Readme
 ```
-or type the following command to calculate the exact marker distance and the Flex Meta-Storms distance:
+or type the following command to calculate the Flex Meta-Storms distance:
 - User installed as a software
 ```
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
-FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -K -o exact.dist
-
-FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -L -o target.dist
+FMS-comp-taxa -T dataset.abd -M 0 -m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 ```
-The output file “*.dist” is the pairwise distance matrix. 
+The output file “target.dist” is the pairwise distance matrix. 
 
 - User installed as a PMS plugin
 ```
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
-PM-comp-taxa-local -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -K -o exact.dist
-
-PM-comp-taxa-local -T dataset.abd -M ./Marker/Out.Type.sig.meanTests.xls -L -o target.dist
+PM-comp-taxa-local -T dataset.abd -M 0 ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 ```
 
 This demo run should take less than 5 minutes on a recommended computer.
