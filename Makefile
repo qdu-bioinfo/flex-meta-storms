@@ -17,7 +17,7 @@ HASHFLG=-Wno-deprecated
 BUILDFLG=-w -ffunction-sections -fdata-sections -fmodulo-sched -msse
 EXE_CMP=bin/FMS-comp-taxa
 
-tax:$(OBJ_TAX) src/fms_comp_sam.cpp src/comp_sam.cpp
+tax:$(OBJ_TAX) src/fms_comp_sam.cpp
 	$(CC) -o $(EXE_CMP) src/fms_comp_sam.cpp $(HASHFLG) $(BUILDFLG) $(OMPFLG)
 clean:
 	rm -rf bin/PM-* src/*.o
