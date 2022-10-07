@@ -29,7 +29,7 @@ Sys_ver=`uname`
 Check_old_fms=`grep "export FlexMetaStorms"  $PATH_File|awk -F '=' '{print $1}'`
 Check_old_path=`grep "FlexMetaStorms/bin"  $PATH_File |sed 's/\(.\).*/\1/' |awk '{if($1!="#"){print "Ture";}}'`
 Check_old_Rscript_path=`grep "FlexMetaStorms/Rscript"  $PATH_File |sed 's/\(.\).*/\1/' |awk '{if($1!="#"){print "Ture";}}'`
-#Add_Part="####DisabledbyFlexMetaStorms3####"
+Add_Part="####DisabledbyFlexMetaStorms####"
 echo "**Flex Meta-Storms Installation**"
 echo "**version 1.0**"
 
