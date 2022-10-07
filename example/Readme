@@ -1,4 +1,5 @@
 #Here we provide a demo dataset with OTUs abundance of 136 real metagenomic samples in 2 different Groups.
+#The source data is from NCBI database, and the project number is : PRJNA644520.
 #
 #File description
 #dataset.abd: relative abundance of OTUs.
