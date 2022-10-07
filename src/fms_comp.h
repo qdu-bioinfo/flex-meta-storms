@@ -11,10 +11,8 @@
 #include <map>
 #include <vector>
 
-#include "fms_func.h"
-#include "fms_db.h"
 #include "hash.h"
-#include "fms_version.h"
+#include "version.h"
 #include "table_format.h"
 #include "otu_parser.h"
 #include "dist.h"
@@ -32,120 +30,16 @@ using namespace std;
 class _FMS_Comp_Tree : public _Comp_Tree{
       
       public:
-             _FMS_Comp_Tree(){                           
-                           LeafN = 0;
-                           OrderN = 0;                 
-                           Init();
+             _FMS_Comp_Tree():_Comp_Tree(){                           
                           }
     
-            _FMS_Comp_Tree(char db){
-                        Database.Set_DB(db);  
-						
-                        LeafN = 0;
-                        OrderN = 0;
-						Init();
-                        }
+            _FMS_Comp_Tree(char db):_Comp_Tree(db) {
+                          }
     
              int Load_FMS_abd(_Table_Format * table, float * Abd, int sample, bool is_cp_correct); //Load by table_format
-             float Calc_FMS_sim(float * Abd_1, float * Abd_2);
-             int Get_LeafN(){
-                 return LeafN;
-                 }
-             
-      private:
-              _PMDB Database;
-    
-              vector <float> Dist_1;
-              vector <float> Dist_2;
-              
-              vector <int> Order_1;
-              vector <int> Order_2;
-              vector <int> Order_d;
-              
-              vector <string> Id; 
-              
-              hash_map <string, float, std_string_hash> Cp_number;
-              hash_map <string, int, std_string_hash> Id_hash;
-    
-              void Init();
-              int Load_id();
-              int Load_order();   
-              
-              int LeafN;
-              int OrderN;                         
+             float Calc_FMS_sim(float * Abd_1, float * Abd_2);  
+
               };
-
-void _FMS_Comp_Tree::Init(){    
-                    
-     LeafN = Load_id();
-     //load id hash
-     for (int i = 0; i < LeafN; i ++)
-        Id_hash[Id[i]] = i;
-        
-     OrderN = 0;
-     //load tree  
-     if (Database.Get_Is_Tree())      
-        OrderN = Load_order();
-    
-     //load cp number         
-     if (Database.Get_Is_Cp())
-        Database.Load_Copy_Number(Cp_number);
-     }
-
-int _FMS_Comp_Tree::Load_id(){
-	
-     ifstream infile(Database.Get_Tree_Id().c_str(), ifstream::in);
-     if (!infile){
-                 cerr << "Error: Cannot open file : " << Database.Get_Tree_Id() << endl;
-                 return 0;
-                 }
-     
-     string buffer;
-     int count = 0;
-     while(getline(infile, buffer)){
-                           if (buffer.size() == 0) continue;
-                           Id.push_back(buffer);
-                           count ++;
-                           }
-     
-     infile.close();
-     infile.clear();
-     return count;
-     }
-
-
-int _FMS_Comp_Tree::Load_order(){
-	
-    ifstream infile(Database.Get_Tree_Order().c_str(), ifstream::in);
-    if (!infile){
-                 cerr << "Error: Cannot open file : " << Database.Get_Tree_Order() << endl;
-                 return 0;
-                 }
-    
-     string buffer;
-     int count = 0;
-     while(getline(infile, buffer)){                           
-                           if(buffer.size() == 0) continue;
-                           stringstream strin(buffer);
-                           int order_1 = 0;
-                           int order_2 = 0;
-                           int order_d = 0;
-                           float dist_1 = 0;
-                           float dist_2 = 0;
-                           strin >> order_1 >> dist_1 >> order_2 >> dist_2 >> order_d;
-                           Order_1.push_back(order_1);
-                           Order_2.push_back(order_2);
-                           Order_d.push_back(order_d);
-                           Dist_1.push_back(dist_1);
-                           Dist_2.push_back(dist_2);
-                           count ++;                           
-                           }
-       
-    infile.close();
-    infile.clear(); 
-    
-    return count;
-    }
 
 int _FMS_Comp_Tree::Load_FMS_abd(_Table_Format * table, float *Abd, int sample, bool is_cp_correct){
     
@@ -161,7 +55,7 @@ int _FMS_Comp_Tree::Load_FMS_abd(_Table_Format * table, float *Abd, int sample, 
     for (int i = 0; i < otus.size(); i ++)
         if (abds[i] > 0){
             
-            string a_otu = Check_FMS_OTU(otus[i]);
+            string a_otu = Check_OTU(otus[i]);
             float cp_no = 1.0;
                                       
             if (Id_hash.count(a_otu) != 0){
@@ -242,11 +136,10 @@ float _FMS_Comp_Tree::Calc_FMS_sim(float * Abd_1, float * Abd_2){
               
               }
       
-        //total /= 100.0; //scale 0-1
         total = (total > 1.0) ? 1 : total;
         total = (total < 0.0) ? 0 : total;
         float abd_m=0,abd_n=0;
-	int len_m=99322,len_n=99322;
+		int len_m=LeafN,len_n=LeafN;
 	    for(int i=0;i<len_m;i++)
 		    abd_m+=Abd_1[i];
 	    for(int j=0;j<len_n;j++)

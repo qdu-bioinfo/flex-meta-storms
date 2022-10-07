@@ -64,7 +64,7 @@ class _Comp_Tree{
                     return Id[n];
                     }
              
-      private:
+      protected:
               _PMDB Database;
     
               vector <float> Dist_1;

@@ -18,15 +18,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "fms_func.h"
 #include "fms_comp.h"
 
 using namespace std;
 
 char Ref_db;
 
-string Listfilename;
-string Listprefix;
+
 string Queryfile1;
 string Queryfile2;
 
@@ -36,15 +34,12 @@ string Targetfilename;
 string Markerfilename;
 
 int Coren = 0;
+int Mode = 0; //default is FMS;
 
 bool Is_cp_correct; 
 bool Is_sim; //true: sim, false: dist;
-bool Is_heatmap;
-int Cluster = 2;
 
-int Mode = 1; //default is FMS;
 
- 
 int printhelp(){
     
     cout << "Version : " << Version << endl;
@@ -55,11 +50,8 @@ int printhelp(){
     
     cout << "\t[Input options, required]" << endl;
     cout << "\t  -T (upper) Input OTU abundance table (*.OTU.Abd) for multi-sample comparison" << endl;
-	cout << "\t  -M Input biomarker path" << endl;
-
-    cout << "\t  -K Calculate Exact marker distance" << endl;
-	cout << "\t  or " << endl;
-    cout << "\t  -L Calculate Flex Meta-Storms distance" << endl;
+	cout << "\t  -M (upper) Distance Metric, 0: Flex Meta-Storms; 1: Exact Marker, default is 0" << endl;
+	cout << "\t  -m Input biomarker path" << endl;
     
     cout << "\t[Output options]" << endl;
     cout << "\t  -o Output file, Output distance matrix or similarity matrix file" << endl;
@@ -78,11 +70,10 @@ int Parse_Para(int argc, char * argv[]){
     Ref_db = 'G';
     
     Coren = 0;
-    Mode = 1; //default is FMS;
+    Mode = 0; //default is FMS;
     
     Is_cp_correct = true;
     Is_sim = false;
-    Is_heatmap = false;
     
     int i = 1;
       
@@ -97,11 +88,10 @@ int Parse_Para(int argc, char * argv[]){
          switch(argv[i][1]){
                             case 'D': Ref_db = argv[i+1][0]; break;
                             case 'T': Tablefilename = argv[i+1]; break;
-							case 'K': Targetfilename = ".exact_marker"; Mode = 0; i -= 1; break;
-							case 'L': Targetfilename = ".target_marker"; Mode = 1; i -= 1; break;
+							case 'M': Mode = atoi(argv[i + 1]); break;
                             case 'o': Outfilename = argv[i+1]; break;
-							case 'M': Markerfilename = argv[i + 1]; break;
-			    case 'd': if ((argv[i + 1][0] == 'f') || (argv[i + 1][0] == 'F')) Is_sim = true; break;
+							case 'm': Markerfilename = argv[i + 1]; break;
+							case 'd': if ((argv[i + 1][0] == 'f') || (argv[i + 1][0] == 'F')) Is_sim = true; break;
                             case 't': Coren = atoi(argv[i+1]); break;         
                             case 'h': printhelp(); break;
                             default : cerr << "Error: Unrec argument " << argv[i] << endl; printhelp(); break; 
@@ -115,11 +105,9 @@ int Parse_Para(int argc, char * argv[]){
                     
                     Coren = max_core_number;
                     } 
-    if (Cluster <= 0){
-                cerr << "Warning: cluster number must be larger than 0, change to default (2)" << endl;
-                }
     }
 
+//Load marker information
 vector<string> bio_marker;
 void Read_bio_marker(string path1)
 {
@@ -135,18 +123,19 @@ void Read_bio_marker(string path1)
 	getline(ifs_bio_marker, temp);
 	while (getline(ifs_bio_marker, temp))
 	{
-		line = split(temp, "\t");
+		line = split(temp, "\r\t");
 		bio_marker.emplace_back(line[0]);
 		line.clear();
 	}
-		
+	ifs_bio_marker.close();
 }
 
+//Load approximate members
 unordered_map<string, vector<string>> similarity_table;
 void save_similarity_table()
 {
 	string PATH;
-	PATH = Check_FMS_Env();
+	PATH = Check_Env();
 	PATH += "/databases/gg_13/gg_13_approximate_members.tab";
 	ifstream ifs2;
 	ifs2.open(PATH, ios::in);
@@ -170,7 +159,7 @@ void save_similarity_table()
 	ifs2.close();
 }
 
-
+//Save sample species information
 vector<string> sample_otu_sum;
 void save_sample_otu_sum(string Tablefilename)
 {
@@ -182,15 +171,14 @@ void save_sample_otu_sum(string Tablefilename)
 	ifs_sample_otu.close();
 }
 
-
-unordered_map<string, float> map_local_otu;
+//Extract the exact marker abundance
 unordered_map<string, float> map_key_otu;
 void exact_marker(string Tablefilename)
 {
 	ifstream ifs_talbe_file;
 	ifs_talbe_file.open(Tablefilename, ios::in);
 	ofstream ofs_exact_marker;
-	Targetfilename = Outfilename + Targetfilename;
+	Targetfilename = Outfilename + ".exact_marker";
 	ofs_exact_marker.open(Targetfilename, ios::out);
 	vector<vector<string>> exact_marker;
 	vector<float> single_sample;
@@ -243,19 +231,66 @@ void exact_marker(string Tablefilename)
 		vec_temp.clear();
 		times++;
 	}
+	ifs_talbe_file.close();
+	ofs_exact_marker.close();
+
 }
+
+//Extract the target marker abundance
+unordered_map<string, float> map_local_otu;
 void target_marker(string Tablefilename)
 {
 	ifstream ifs_talbe_file;
 	ifs_talbe_file.open(Tablefilename, ios::in);
 	ofstream  ofs_target;
-	Targetfilename = Outfilename + Targetfilename;
+	Targetfilename = Outfilename + ".target_marker";
 	ofs_target.open(Targetfilename, ios::out);
 	vector<vector<string>> exact_marker;
 	vector<float> single_sample;
 	vector<string> vec_temp;
 	string temp;
 	getline(ifs_talbe_file, temp);
+	unordered_map<string, float> target_score;
+
+	//Save exact markers weights
+	for(int m=0;m<bio_marker.size();m++)
+		target_score.insert(pair<string, float>(bio_marker[m], 1.0));
+	
+	//Save approximate markers weights(Max)
+	for (int i = 0; i < bio_marker.size(); i++)
+	{
+		for (int j = 1; j < sample_otu_sum.size(); j++)
+		{
+			for (int m = 0; similarity_table[bio_marker[i]][0] != "00" && m < similarity_table[bio_marker[i]].size() - 1; m += 2)
+			{
+				if (sample_otu_sum[j] == similarity_table[bio_marker[i]][m])
+				{
+					vector<string> ::iterator t;
+					t = find(bio_marker.begin(), bio_marker.end(), sample_otu_sum[j]);
+					if (t == bio_marker.end()) {
+						if (target_score.count(sample_otu_sum[j]) == 0)
+						{
+							target_score.insert(pair<string, float>(sample_otu_sum[j], stringtonum<float>(similarity_table[bio_marker[i]][m + 1])));
+						}
+						else
+						{
+							if (target_score[sample_otu_sum[j]] < stringtonum<float>(similarity_table[bio_marker[i]][m + 1]))
+							{
+								target_score[sample_otu_sum[j]] = stringtonum<float>(similarity_table[bio_marker[i]][m + 1]);
+							}
+						}
+					}
+
+
+				}
+			}
+		}
+	}
+	cout << endl;
+	cout << "Calculate flex meta-storms distance :" << endl;
+	cout << "Number of exact markers is : " << bio_marker.size() << endl;
+	cout << "Number of approximate markers is : " << target_score.size() - bio_marker.size() << endl;
+	cout << "Number of target markers is : " << target_score.size() << endl;
 	int times = 0;
 	while (getline(ifs_talbe_file, temp))
 	{
@@ -264,44 +299,20 @@ void target_marker(string Tablefilename)
 		{
 			single_sample.push_back(stringtonum<float>(vec_temp[i]));
 		}
-		for (int i = 0; i < sample_otu_sum.size(); i++)
+		for (int j = 0; j < sample_otu_sum.size(); j++)
 		{
-			for (int j = 0; j < bio_marker.size(); j++)
+			if (target_score.count(sample_otu_sum[j]) != 0)
 			{
-				if (sample_otu_sum[i] == bio_marker[j])
+				if (map_local_otu.count(sample_otu_sum[j]) != 0)
 				{
-					map_local_otu[bio_marker[j]] = single_sample[i];
+					map_local_otu[sample_otu_sum[j]] = single_sample[j] * target_score[sample_otu_sum[j]];
+
 				}
+				else
+					map_local_otu.insert(pair<string, float>(sample_otu_sum[j], single_sample[j] * target_score[sample_otu_sum[j]]));
 			}
 		}
 
-		for (int i = 0; i < bio_marker.size(); i++)
-		{
-			for (int j = 1; j < sample_otu_sum.size(); j++)
-			{
-				for (int m = 0; similarity_table[bio_marker[i]][0] != "00" && m < similarity_table[bio_marker[i]].size()-1; m += 2)
-				{
-					if (sample_otu_sum[j] == similarity_table[bio_marker[i]][m])
-					{
-						vector<string> ::iterator t;
-						t = find(bio_marker.begin(), bio_marker.end(), sample_otu_sum[j]);
-						if (t == bio_marker.end()) {
-							if (map_local_otu.count(sample_otu_sum[j]) == 0)
-								map_local_otu.insert(pair<string, float>(sample_otu_sum[j], stringtonum<float>(similarity_table[bio_marker[i]][m + 1]) * single_sample[j]));
-							else
-							{
-								if (map_local_otu[sample_otu_sum[j]] < stringtonum<float>(similarity_table[bio_marker[i]][m + 1]) * single_sample[j])
-								{
-									map_local_otu[sample_otu_sum[j]] = stringtonum<float>(similarity_table[bio_marker[i]][m + 1]) * single_sample[j];
-								}
-							}
-						}
-
-
-					}
-				}
-			}
-		}
 		if (times == 0)
 		{
 			ofs_target << "sample_id" << "\t";
@@ -310,11 +321,6 @@ void target_marker(string Tablefilename)
 				ofs_target << pointer->first << "\t";
 			}
 			ofs_target << endl;
-			cout << endl;
-			cout << "Calculate flex meta-storms distance :" << endl;
-			cout << "Number of exact markers is : " << bio_marker.size() << endl;
-			cout << "Number of approximate markers is : " << map_local_otu.size()-bio_marker.size() << endl;
-			cout << "Number of target markers is : " << map_local_otu.size() << endl;
 		}
 		ofs_target << vec_temp[0] << "\t";
 		for (auto pointer = map_local_otu.begin(); pointer != map_local_otu.end(); pointer++)
@@ -331,6 +337,8 @@ void target_marker(string Tablefilename)
 		vec_temp.clear();
 		times++;
 	}
+	ifs_talbe_file.close();
+	ofs_target.close();
 }
 
 void Output_Matrix(const char * outfilename, int n, vector <float> * sim_matrix, bool is_sim, vector <string> sam_name){
@@ -376,7 +384,6 @@ void Multi_Comp_Table(_Table_Format abd_table){
 	
     _FMS_Comp_Tree comp_tree(Ref_db);
     int file_count = abd_table.Get_Sample_Size();
-         
     //load abd
     float **Abd = new float * [file_count];
     for (int i = 0; i < file_count; i ++){
@@ -428,22 +435,19 @@ int main(int argc, char * argv[]){
 	Read_bio_marker(Markerfilename);
 	save_similarity_table();
 	save_sample_otu_sum(Tablefilename);
-	
     switch (Mode){
-           case 0: {
-			   exact_marker(Tablefilename);
-			   
-			   _Table_Format table(Targetfilename.c_str());
-			   Multi_Comp_Table(table);
-			   break;
-		   }
-           case 1:{
+           case 0:{
 			   target_marker(Tablefilename);
-
                _Table_Format table(Targetfilename.c_str());
                Multi_Comp_Table(table); 
                break;
                    }
+		   case 1: {
+			   exact_marker(Tablefilename);
+			   _Table_Format table(Targetfilename.c_str());
+			   Multi_Comp_Table(table);
+			   break;
+		   }
            default: break;
            }
     return 0;
