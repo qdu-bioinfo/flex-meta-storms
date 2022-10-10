@@ -152,7 +152,7 @@ The output file “exact.dist” is the pairwise matrix of distances on exact ma
 
 P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is named as “PM-comp-taxa-local”, with the same usage and parameters as “FMS-comp-taxa”.
 # Example dataset
-Here, we provide a demo dataset in the "examples" folder with 136 real microbiomes. In this package, "dataset.abd" is the relative abundance of OTU table, and "dataset.meta" is the metadata of samples. To run the demo, you can either automatically start:
+Here, we provide a demo dataset in the "example" folder with 136 real microbiomes. In this package, "dataset.abd" is the relative abundance of OTU table, and "dataset.meta" is the metadata of samples. To run the demo, you can either automatically start:
 To run the demo, you can either:
 ```
 cd example
@@ -165,7 +165,7 @@ or type the following command to calculate the Flex Meta-Storms distance:
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
 #Calculate the Flex Meta-Storms distance of the samples
-FMS-comp-taxa -T dataset.abd-m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
+FMS-comp-taxa -T dataset.abd -m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 ```
 The output file “target.dist” is the pairwise distance matrix. 
 
