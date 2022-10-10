@@ -1,5 +1,5 @@
 #Here we provide a demo dataset of 136 real microbiome samples in 2 different Groups.
-#The source data is from NCBI database, and the project number is : PRJNA644520.
+#The source data is from NCBI database, and the project number is PRJNA644520.
 #
 #File description
 #dataset.abd: OTUs picked by Parallel-Meta Suite against Greengenes v13-8 (OTUs simulated by Greengenes v13-8).
