@@ -135,7 +135,7 @@ Here “dataset.abd” is the microbial feature table, “dataset.meta” is the
 
 With the exact markers, FMS can extract all related community members (target members) using a flexible extraction that considers the weighted taxonomic and functional relations of microbes, and then calculate the normalized phylogeny-based distance as local alignment distance.
 ```
-FMS-comp-taxa -T dataset.abd -m Markers/ Out.Group.sig.meanTests.xls -o target.dist
+FMS-comp-taxa -T dataset.abd -m Markers/Out.Group.sig.meanTests.xls -o target.dist
 ```
 The output file “target.dist” is the pairwise matrix of FMS distances. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package.  
 
@@ -146,7 +146,7 @@ P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is 
 
 The FMS can also calculate the distances ONLY on exact markers (without flexible target member extraction).
 ```
-FMS-comp-taxa -T dataset.abd -M 1 -m Markers/ Out.Group.sig.meanTests.xls -o exact.dist
+FMS-comp-taxa -T dataset.abd -M 1 -m Markers/Out.Group.sig.meanTests.xls -o exact.dist
 ```
 The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package. The “-M 1” is the switch for distances on exact markers.  
 
