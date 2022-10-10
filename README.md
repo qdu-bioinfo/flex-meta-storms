@@ -52,7 +52,7 @@ At present, Flex Meta-Storms provides a fully automatic installer for easy insta
 ```
 git clone https://github.com/qdu-bioinfo/flex-meta-storms.git	
 ```
-Click [here](http://) to download the Parallel-Meta Suite plug-in version
+Click [here](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/flex-meta-storms-plugin.tar.gz) to download the Parallel-Meta Suite plug-in version
 
 #### **b. Install by installer**
 ```
@@ -191,7 +191,7 @@ for detailed parameters.
 
 # Supplementary
 
-[Artificial Dataset](http://) contains 100 simulated microbiomes from Greengenes (v13-8) OTUs.  
+[Artificial Dataset](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/data/Artificial_dataset.tar.gz) contains 100 simulated microbiomes from Greengenes (v13-8) OTUs.  
 
 [Real Dataset 1](http://) contains 88 autism samples inferred from 16S rRNA genes by Parallel Meta-Suite.
 
