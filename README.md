@@ -37,9 +37,9 @@ OpenMP library is the C/C++ parallel computing library. Most Linux releases have
 brew install gcc
 ```
 
-## Rscript environment (optional for [biomarker selection](#d-calculate-distance-on-exact-markers-optional))
+## Rscript environment (optional for biomarker selection))
 
-For biomarkers selection (optional), FMS requires cran-R (http://cran.r-project.org/) 3.2 or higher for the execution of “.R” scripts. Then all packages could be automatically installed and updated by the FMS installer.
+For [biomarkers selection](#b-exact-biomarker-selection-optional) (optional), FMS requires cran-R (http://cran.r-project.org/) 3.2 or higher for the execution of “.R” scripts. Then all packages could be automatically installed and updated by the FMS installer.
 
 # Installation guide
 
@@ -52,7 +52,7 @@ At present, Flex Meta-Storms provides a fully automatic installer for easy insta
 ```
 git clone https://github.com/qdu-bioinfo/flex-meta-storms.git	
 ```
-Click here to download the Parallel-Meta Suite plug-in version
+Click [here](http://) to download the Parallel-Meta Suite plug-in version
 
 #### **b. Install by installer**
 ```
@@ -86,7 +86,7 @@ source ~/.bashrc
 cd flex-meta-storms
 make
 ```
-#### **d. Install R packages (optional for biomarker selection)**
+#### **d. Install R packages (optional for [biomarker selection](#b-exact-biomarker-selection-optional))**
 
 ```
 Rscript $ FlexMetaStorms/Rscript/config.R
@@ -117,7 +117,7 @@ Biomarkers can either be manually assigned by users in the above format (e.g. pa
 
 
 #### **b. Exact biomarker selection (optional)**  
-FMS provides a biomarkers selection tool based on rank-sum test. This biomarker selection requires microbial feature table and metadata in the follow format:
+FMS provides a biomarkers selection tool based on rank-sum test. This biomarker selection requires [microbial feature table](#a---input-data-formats-required) and metadata in the follow format:
 ```
             Group
 Sample_1    H
@@ -137,7 +137,7 @@ With the exact markers, FMS can extract all related community members (target me
 ```
 FMS-comp-taxa -T dataset.abd -m Markers/ Out.Group.sig.meanTests.xls -o target.dist
 ```
-The output file “target.dist” is the pairwise matrix of FMS distances. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “PM_Marker_Test.R” in the FMS package.  
+The output file “target.dist” is the pairwise matrix of FMS distances. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package.  
 
 P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is named as “PM-comp-taxa-local”, with the same usage and parameters as “FMS-comp-taxa”.  
 
@@ -148,7 +148,7 @@ The FMS can also calculate the distances ONLY on exact markers (without flexible
 ```
 FMS-comp-taxa -T dataset.abd -M 1 -m Markers/ Out.Group.sig.meanTests.xls -o exact.dist
 ```
-The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “PM_Marker_Test.R” in the FMS package. The “-M 1” is the switch for distances on exact markers.  
+The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package. The “-M 1” is the switch for distances on exact markers.  
 
 P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is named as “PM-comp-taxa-local”, with the same usage and parameters as “FMS-comp-taxa”.
 # Example dataset
