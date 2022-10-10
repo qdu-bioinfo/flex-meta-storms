@@ -2,9 +2,9 @@
 #################################################################
 # Function: Configurate the R packages for Flex Meta-Storms
 # Call: Rscript RM_Config.R
-# Authors: Mingqian Zhang,Xiaoquan Su
-# Updated at Oct 10, 2022
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
+# Code by: Mingqian Zhang, Xiaoquan Su
+# Flex Meta-Storms version 1.0
 #################################################################
 
 ## install necessary libraries
