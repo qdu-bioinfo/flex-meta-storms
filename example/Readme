@@ -1,9 +1,9 @@
-#Here we provide a demo dataset with OTUs abundance of 136 real metagenomic samples in 2 different Groups.
+#Here we provide a demo dataset of 136 real microbiome samples in 2 different Groups.
 #The source data is from NCBI database, and the project number is : PRJNA644520.
 #
 #File description
-#dataset.abd: relative abundance of OTUs.
-#dataset.meta: group information of the samples.
+#dataset.abd: OTUs picked by Parallel-Meta Suite against Greengenes v13-8 (OTUs simulated by Greengenes v13-8).
+#dataset.meta: metadata of the samples.
 #
 #To run the demo, you can either 
 #
@@ -13,12 +13,12 @@
 #type the following commands. 
 #
 #Commands:
-#Screen biomarkers in samples.
+#Biomarker selection for samples
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 #
-#Calculate the flex meta-storms distance of the samples.
-FMS-comp-taxa -T dataset.abd -M 0 -m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
+#Calculate the Flex Meta-Storms (FMS) distance of the samples
+FMS-comp-taxa -T dataset.abd -m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 #
 #Output description
 #target.dist: Pairwise distance of the 136 samples
-#This demo run should take less than 1 minute on a recommended computer.
+#This demo run should take less than 2 minute on a recommended computer.
