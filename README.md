@@ -161,7 +161,7 @@ sh Readme
 or type the following command to calculate the Flex Meta-Storms distance:
 
 ```
-# Biomarker selection for samples
+#Biomarker selection for samples
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
 #Calculate the Flex Meta-Storms distance of the samples
