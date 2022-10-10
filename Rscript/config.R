@@ -1,10 +1,9 @@
 #!/usr/bin/env Rscript
 #################################################################
-# Function: Configurate the R packages for Parallel-META
+# Function: Configurate the R packages for Flex Meta-Storms
 # Call: Rscript RM_Config.R
-# Authors: Xiaoquan Su, Yuzhu Chen
-# Updated at July 29, 2021
-# Updated by Yuzhu Chen
+# Authors: Mingqian Zhang,Xiaoquan Su
+# Updated at Oct 10, 2022
 # Bioinformatics Group, College of Computer Science & Technology, Qingdao University
 #################################################################
 
