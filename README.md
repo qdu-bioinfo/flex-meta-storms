@@ -93,82 +93,97 @@ Rscript $ FlexMetaStorms/Rscript/config.R
 ```
 
 # Usage
-**a.  Calculate Flex Meta-Storms distance**
-- User installed as a software
-```
-FMS-comp-taxa -T dataset.abd -M 0 -m bio_marker.tab -o target.dist
-```
-The output file “target.dist” is the pairwise distance matrix. 
-The format of "bio_marker. tab" is as follows:
-|  | A.test | B.test | ... |
-| :----:| :----: | :----: | :----: |
-| OTU_1| ... | ... | ... |
-| OTU_2 | ... | ... | ... |
-| OTU_3 | ... | ... | ... |
-| OTU_4 | ... | ... | ... |
-| ... | ... | ... | ... | ... |
+**a.   Input data formats (required)**  
+ FMS requires two files to calculate the “local distances” among microbiomes:
+1. Microbial feature table (e.g. OTU table). Currently FMS supports OTUs of Greengenes (v13-8). More reference database will be released soon. For example  
 
-- User installed as a PMS plugin
 ```
-PM-comp-taxa-local -T dataset.abd -M 0 -m bio_marker.tab -o target.dist
+            OTU_1   OTU_2   OTU_3   ...     OTU_M
+Sample_1    0.1     0        0.1    ...     0.2
+Sample_2    0.2     0.1      0      ...     0.1
+...         ...     ...      ...    ...     ...
+Sample_N    0       0.3      0.2    ...     0.3
 ```
-The output file “target.dist” is the pairwise distance matrix. 
+2. Exact markers of interest  
 
-**b. Calculate exact markers distance**
-- User installed as a software
 ```
-FMS-comp-taxa -T dataset.abd -M 1 -m bio_marker.tab -o exact.dist
+#Markers
+OTU_2
+OTU_5
+...
+OTU_x
 ```
-The output file “exact.dist” is the pairwise distance matrix. 
+Biomarkers can either be manually assigned by users in the above format (e.g. parsed from LefSe), or be automatically selected by rank-sum test in the following step.
 
-- User installed as a PMS plugin
-```
-PM-comp-taxa-local -T dataset.abd -M 1 -m bio_marker.tab -o exact.dist
-```
-The output file “exact.dist” is the pairwise distance matrix. 
 
+**b. Exact biomarker selection (optional)**  
+FMS provides a biomarkers selection tool based on rank-sum test. This biomarker selection requires microbial feature table and metadata in the follow format:
+```
+            Group
+Sample_1    H
+Sample_2    D
+...         ...
+Sample_N    D
+```
+```
+PM_Marker_Test.R -i dataset.abd -m dataset.meta -o Marker
+```
+Here “dataset.abd” is the microbial feature table, “dataset.meta” is the metadata, and “Marker” is the output directory of selected biomarkers. In “Marker” directory, the “Out.Group.sig.meanTests.xls” file is the selected biomarkers with significant differences between groups.  
+
+
+**c. Calculate Flex Meta-Storms distance (local alignment distances, required)**  
+
+With the exact markers, FMS can extract all related community members (target members) using a flexible extraction that considers the weighted taxonomic and functional relations of microbes, and then calculate the normalized phylogeny-based distance as local alignment distance.
+```
+FMS-comp-taxa -T dataset.abd -m Markers/ Out.Group.sig.meanTests.xls -o target.dist
+```
+The output file “target.dist” is the pairwise matrix of FMS distances. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “PM_Marker_Test.R” in the FMS package.  
+
+P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is named as “PM-comp-taxa-local”, with the same usage and parameters as “FMS-comp-taxa”.  
+
+
+**d. Calculate distance on exact markers (optional)**  
+
+The FMS can also calculate the distances ONLY on exact markers (without flexible target member extraction).
+```
+FMS-comp-taxa -T dataset.abd -M 1 -m Markers/ Out.Group.sig.meanTests.xls -o exact.dist
+```
+The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-m” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “PM_Marker_Test.R” in the FMS package. The “-M 1” is the switch for distances on exact markers.  
+
+P.s. If FMS is installed as the plug-in of Parallel-Meta Suite, this program is named as “PM-comp-taxa-local”, with the same usage and parameters as “FMS-comp-taxa”.
 # Example dataset
-Here, we provide a demo dataset (Real dataset I) in the "examples" folder with real species information for 136 individuals. In this package, "dataset.meta" is the meta information of the samples, and "dataset.abd" is the relative abundance at the OTU level.
+Here, we provide a demo dataset in the "examples" folder with 136 real microbiomes. In this package, "dataset.abd" is the relative abundance of OTU table, and "dataset.meta" is the metadata of samples. To run the demo, you can either automatically start:
 To run the demo, you can either:
 ```
 cd example
 sh Readme
 ```
 or type the following command to calculate the Flex Meta-Storms distance:
-- User installed as a software
+
 ```
+# Biomarker selection for samples
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 
-FMS-comp-taxa -T dataset.abd -M 0 -m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
+#Calculate the Flex Meta-Storms distance of the samples
+FMS-comp-taxa -T dataset.abd-m ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 ```
 The output file “target.dist” is the pairwise distance matrix. 
-
-- User installed as a PMS plugin
-```
-PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
-
-PM-comp-taxa-local -T dataset.abd -M 0 ./Marker/Out.Group.sig.meanTests.xls -o target.dist
-```
-
-This demo run should take less than 5 minutes on a recommended computer.
 
 # Tools in this package
 **a. PM_Marker_Test.R**
 
-Screening biomarkers for community samples. Run:
+Biomarker selection from a microbial feature table. Run:
 ```
 PM_Marker_Test.R -h
 ```
 for detailed parameters.
 
 
-**b. FMS-comp-taxa or PM-comp-taxa-local**
+**b. FMS-comp-taxa**
 
-Calculate Exact markers distance or Flex Meta-Storms distance between samples. Run:
+Calculate Flex Meta-Storms distance between samples. Run:
 ```
 FMS-comp-taxa -h 
-or
-PM-comp-taxa-local -h
 ```
 for detailed parameters.
 
@@ -176,10 +191,8 @@ for detailed parameters.
 
 # Supplementary
 
-[Real Dataset 1](http://) Contains 88 autism samples inferred from 16S rRNA genes by Parallel Meta-Suite.
+[Artificial Dataset](http://) contains 100 simulated microbiomes from Greengenes (v13-8) OTUs.  
+
+[Real Dataset 1](http://) contains 88 autism samples inferred from 16S rRNA genes by Parallel Meta-Suite.
 
 [Real Dataset 2](http://) Contains 104 colorectal cancer samples inferred from 16S rRNA genes by Parallel Meta-Suite.
-
-
-
-
