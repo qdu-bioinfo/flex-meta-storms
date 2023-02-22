@@ -94,7 +94,7 @@ Rscript $FlexMetaStorms/Rscript/config.R
 # Usage
 #### **a.   Input data formats**  
  FMS requires two files to calculate the “local distances” among microbiomes:
-1. Microbial feature table (e.g. OTU table). Currently FMS supports OTUs of Greengenes (v13-8). More reference database will be released soon. For example  
+1. Microbial abundance table (e.g. OTU table). Currently FMS supports OTUs of Greengenes (v13-8). More reference database will be released soon. For example  
 
 ```
             OTU_1   OTU_2   OTU_3   ...     OTU_M
@@ -116,7 +116,7 @@ Biomarkers can either be manually assigned by users in the above format (e.g. pa
 
 
 #### **b. Exact biomarker selection (optional)**  
-FMS provides a biomarkers selection tool based on rank-sum test. This biomarker selection requires [microbial feature table](#a---input-data-formats-required) and metadata in the follow format:
+FMS provides a biomarkers selection tool based on rank-sum test. This biomarker selection requires [microbial abundance table](#a---input-data-formats-required) and metadata in the follow format:
 ```
             Group
 Sample_1    H
@@ -127,7 +127,7 @@ Sample_N    D
 ```
 PM_Marker_Test.R -i dataset.abd -m dataset.meta -o Marker
 ```
-Here “dataset.abd” is the microbial feature table, “dataset.meta” is the metadata, and “Marker” is the output directory of selected biomarkers. In “Marker” directory, the “Out.Group.sig.meanTests.xls” file is the selected biomarkers with significant differences between groups.  
+Here “dataset.abd” is the microbial abundance table, “dataset.meta” is the metadata, and “Marker” is the output directory of selected biomarkers. In “Marker” directory, the “Out.Group.sig.meanTests.xls” file is the selected biomarkers with significant differences between groups.  
 
 
 #### **c. Calculate Flex Meta-Storms distance (local alignment distances)**  
