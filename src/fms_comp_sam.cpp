@@ -50,8 +50,10 @@ int printhelp(){
     
     cout << "\t[Input options, required]" << endl;
     cout << "\t  -T (upper) Input OTU abundance table (*.OTU.Abd) for multi-sample comparison" << endl;
-	cout << "\t  -M (upper) Distance Metric, 0: Flex Meta-Storms; 1: Exact Marker, default is 0" << endl;
-	cout << "\t  -m Input biomarker path" << endl;
+	cout << "\t  -M (upper) Input biomarker path" << endl;
+
+	cout << "\t[Optional parameters]" << endl;
+	cout << "\t  -k Calculate exact markers distance, calculate Flex Meta-Storms distance by default" << endl;
     
     cout << "\t[Output options]" << endl;
     cout << "\t  -o Output file, Output distance matrix or similarity matrix file" << endl;
@@ -88,9 +90,9 @@ int Parse_Para(int argc, char * argv[]){
          switch(argv[i][1]){
                             case 'D': Ref_db = argv[i+1][0]; break;
                             case 'T': Tablefilename = argv[i+1]; break;
-							case 'M': Mode = atoi(argv[i + 1]); break;
+							case 'k': Mode = 1; i--; break;
                             case 'o': Outfilename = argv[i+1]; break;
-							case 'm': Markerfilename = argv[i + 1]; break;
+							case 'M': Markerfilename = argv[i + 1]; break;
 							case 'd': if ((argv[i + 1][0] == 'f') || (argv[i + 1][0] == 'F')) Is_sim = true; break;
                             case 't': Coren = atoi(argv[i+1]); break;         
                             case 'h': printhelp(); break;

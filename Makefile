@@ -1,20 +1,26 @@
 CC:=g++
-ifneq (,$(findstring Darwin,$(shell uname)))
-	exist = $(shell if [ -e '/usr/local/bin/g++-10' ]; then echo "exist"; else echo "notexist"; fi;)
-	ifeq ($(exist),exist)
-		CC:=g++-10
-	else
-        	exist = $(shell if [ -e '/usr/local/bin/g++-9' ]; then echo "exist"; else echo "notexist"; fi;)
-        	ifeq ($(exist),exist)
-                	CC:=g++-9
-		else
-			CC:=g++-8
-		endif
-	endif
+
+ifneq ($(shell uname -s),Darwin)
+    # Not macOS
+else ifneq ($(shell which g++-12),)
+    # g++-12 exists
+    CC:=g++-12
+else ifneq ($(shell which g++-11),)
+    # g++-11 exists
+    CC:=g++-11
+else ifneq ($(shell which g++-10),)
+    # g++-10 exists
+    CC:=g++-10
+else ifneq ($(shell which g++-9),)
+    # g++-9 exists
+    CC:=g++-9
+else
+    # g++-12, g++-11, g++-10, and g++-9 do not exist
 endif
+
 OMPFLG=-fopenmp
 HASHFLG=-Wno-deprecated
-BUILDFLG=-w -ffunction-sections -fdata-sections -fmodulo-sched -msse
+BUILDFLG=-w -ffunction-sections -fdata-sections -fmodulo-sched
 EXE_CMP=bin/FMS-comp-taxa
 
 tax:$(OBJ_TAX) src/fms_comp_sam.cpp
