@@ -165,13 +165,14 @@ PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 #Calculate the Flex Meta-Storms distance of the samples
 FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 
-#Calculate the Exact markers distance of the samples
+#Calculate the Meta-Storms distance on exact markers of the samples
 FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -k -o exact.dist
 ```
 ### Output description
-target.dist: Paired Flex Meta-Storms distance of 136 samples  
+We also provide the example [output]()
+target.dist: Regular pairwise Flex Meta-Storms distance of 136 samples  
 target.dist.target_marker: Relative abundance of target members in 136 samples  
-exact.dist: Paired Exact markers distance of 136 samples  
+exact.dist: Regular pairwise Meta-Storms distance on exact markers of 136 samples  
 exact.dist.exact_marker: Relative abundance of exact markers in 136 samples
 
 # Tools in this package
