@@ -23,8 +23,8 @@ FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -o target.d
 FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -k -o exact.dist
 #
 #Output description
-#target.dist: Regular pairwise Flex Meta-Storms distance of 136 samples
-#target.dist.target_marker: Relative abundance of target members in 136 samples
-#exact.dist: Regular pairwise Meta-Storms distance on exact markers of 136 samples
-#exact.dist.exact_marker: Relative abundance of exact markers in 136 samples
+#target.dist: Pairwise Flex Meta-Storms distance of 136 samples  
+#target.dist.target_marker: Relative abundance of target members of 136 samples  
+#exact.dist: Pairwise regular Meta-Storms distance on exact markers of 136 samples  
+#exact.dist.exact_marker: Relative abundance of exact markers of 136 samples  
 #This demo run should take less than 5 minute on a recommended computer.
