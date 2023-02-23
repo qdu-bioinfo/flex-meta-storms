@@ -53,7 +53,7 @@ int printhelp(){
 	cout << "\t  -M (upper) Input biomarker path" << endl;
 
 	cout << "\t[Optional parameters]" << endl;
-	cout << "\t  -k Calculate exact markers distance, calculate Flex Meta-Storms distance by default" << endl;
+	cout << "\t  -k Calculate regular Meta-Storms distance only with exact markers " << endl;
     
     cout << "\t[Output options]" << endl;
     cout << "\t  -o Output file, Output distance matrix or similarity matrix file" << endl;
