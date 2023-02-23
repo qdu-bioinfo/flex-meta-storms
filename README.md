@@ -146,7 +146,7 @@ The FMS can also calculate the distances ONLY on exact markers (without flexible
 ```
 FMS-comp-taxa -T dataset.abd -M Marker/Out.Group.sig.meanTests.xls -k -o exact.dist
 ```
-The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-M” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package. The “-k” is the switch for distances on exact markers.  
+The output file “exact.dist” is the pairwise matrix of distances on exact markers. The “-k” is the switch for distances on exact markers.  The “-M” assigns the biomarkers, which can either be manually appointed by users (e.g. parsed from LefSe, etc.), or be selected by “[PM_Marker_Test.R](#b-exact-biomarker-selection-optional)” in the FMS package. 
 
 
 # Example dataset
