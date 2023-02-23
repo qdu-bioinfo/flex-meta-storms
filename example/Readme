@@ -16,11 +16,11 @@
 #Biomarker selection for samples
 PM_Marker_Test.R -m dataset.meta -i dataset.abd -o Marker
 #
-#Calculate the Flex Meta-Storms (FMS) distance of the samples
-FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -o target.dist
-#
 #Calculate the Meta-Storms distance on exact markers of the samples
 FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -k -o exact.dist
+#
+#Calculate the Flex Meta-Storms (FMS) distance of the samples
+FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -o target.dist
 #
 #Output description
 #target.dist: Pairwise Flex Meta-Storms distance of 136 samples  
