@@ -199,6 +199,6 @@ for detailed parameters.
 
 [Artificial Dataset](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/data/Artificial_dataset.tar.gz) contains 100 simulated microbiomes from Greengenes (v13-8) OTUs.  
 
-[Real Dataset 1](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/data/Real_dataset_I.tar.gz) contains 88 ASD 16S amplicoin samples processed by Parallel-Meta Suite.
+[Real Dataset 1](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/data/Real_dataset_I.tar.gz) contains 88 ASD 16S amplicon samples processed by Parallel-Meta Suite.
 
 [Real Dataset 2](http://bioinfo.single-cell.cn/Released_Software/flex-meta-storms/data/Real_dataset_II.tar.gz) Contains 104 CRC 16S amplicon samples processed by Parallel-Meta Suite.
