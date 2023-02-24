@@ -169,7 +169,7 @@ FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -o target.d
 FMS-comp-taxa -T dataset.abd -M ./Marker/Out.Group.sig.meanTests.xls -k -o exact.dist
 ```
 ### Output description
-We also provide the example [output](https://github.com/qdu-bioinfo/flex-meta-storms/tree/master/example/example%20output)  
+We also provide the example [output](https://github.com/qdu-bioinfo/flex-meta-storms/tree/master/example/example_output)  
 target.dist: Regular pairwise Flex Meta-Storms distance of 136 samples  
 target.dist.target_marker: Relative abundance of target members in 136 samples  
 exact.dist: Regular pairwise Meta-Storms distance on exact markers of 136 samples  
