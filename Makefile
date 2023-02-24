@@ -25,5 +25,6 @@ EXE_CMP=bin/FMS-comp-taxa
 
 tax:$(OBJ_TAX) src/fms_comp_sam.cpp
 	$(CC) -o $(EXE_CMP) src/fms_comp_sam.cpp $(HASHFLG) $(BUILDFLG) $(OMPFLG)
+	chmod 777 Rscript/PM_Marker_Test.R
 clean:
 	rm -rf bin/PM-* src/*.o
