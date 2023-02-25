@@ -8,7 +8,7 @@
 # Contents
 
 - [Introduction](#introduction)
-- [System Requirement and dependency](#system-requirement-and-dependency)
+- [System requirement and dependency](#system-requirement-and-dependency)
 - [Installation guide](#installation-guide)
 - [Usage](#usage)
 - [Example dataset](#example-dataset)
